@@ -38,7 +38,52 @@ document.addEventListener('DOMContentLoaded', function() {
             contactForm.reset();
         });
     }
+    
+    // Module tab switching - hide all outputs when switching tabs
+    const moduleTabs = document.querySelectorAll('#moduleTabs button[data-bs-toggle="pill"]');
+    moduleTabs.forEach(tab => {
+        tab.addEventListener('shown.bs.tab', function(e) {
+            // Hide all output sections when switching tabs
+            hideAllOutputs();
+        });
+    });
 });
+
+// Function to hide all output sections
+function hideAllOutputs() {
+    const outputSections = [
+        'noticeOutput',
+        'letterOutput',
+        'quizOutput',
+        'pdfToolOutput',
+        'formOutput'
+    ];
+    
+    outputSections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.style.display = 'none';
+        }
+    });
+}
+
+// Function to reset form inputs (optional - can be enabled if needed)
+function resetFormInputs(tabId) {
+    const formMap = {
+        'notice': 'noticeForm',
+        'letter': 'letterForm',
+        'quiz': 'quizForm',
+        'form': 'formBuilder'
+    };
+    
+    // You can uncomment the lines below to auto-clear forms when switching tabs
+    // Object.values(formMap).forEach(formId => {
+    //     const form = document.getElementById(formId);
+    //     if (form) {
+    //         form.reset();
+    //     }
+    // });
+}
 
 // Notice Generator
 function generateNotice() {
