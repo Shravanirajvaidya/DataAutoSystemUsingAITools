@@ -39,15 +39,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Module tab switching - hide all outputs when switching tabs
+    // Module tab switching - hide all forms and outputs when switching tabs
     const moduleTabs = document.querySelectorAll('#moduleTabs button[data-bs-toggle="pill"]');
     moduleTabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            // First hide all tab panes (forms)
+            hideAllTabPanes();
+            // Then hide all output sections
+            hideAllOutputs();
+        });
+        
+        // Also handle when tab is shown (Bootstrap event)
         tab.addEventListener('shown.bs.tab', function(e) {
-            // Hide all output sections when switching tabs
+            // The clicked tab's content is automatically shown by Bootstrap
+            // We just need to ensure outputs are hidden
             hideAllOutputs();
         });
     });
 });
+
+// Function to hide all tab panes (forms)
+function hideAllTabPanes() {
+    const tabPanes = document.querySelectorAll('#moduleTabContent .tab-pane');
+    tabPanes.forEach(pane => {
+        pane.classList.remove('show', 'active');
+    });
+}
 
 // Function to hide all output sections
 function hideAllOutputs() {
